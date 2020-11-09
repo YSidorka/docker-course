@@ -1,21 +1,22 @@
 let express = require('express');
+let redis = require('redis');
 
-let app = express();
+const app = express();
+const client = redis.createClient();
 
 let port = 3000;
+client.get('visits', (err, visits) => {
+  if (!visits || parseInt(visits) < 0) client.set('visits', 0);
+})
 
 app.get('/', async (req, res) => {
-  res.setHeader('Content-Type', 'application/json');
   try {
-    // memory
-    const used = process.memoryUsage();
-    let result = {};
-    for (let key in used) result[key] = Math.round((used[key] / 1024 / 1024) * 100) / 100 + ' MB';
-
-    return res.send(result);
+    client.get('visits', (err, visits) => {
+      client.set('visits', parseInt(visits) + 1);
+      return res.send('Number of visits is ' + visits);
+    })
   } catch (err) {
-    console.error(JSON.stringify(err));
-    return res.status(500).send({ message: 'Something goes wrong', err: JSON.stringify(err) });
+    return res.status(500).send({ message: 'GET /', err: JSON.stringify(err) });
   }
 });
 
