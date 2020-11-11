@@ -2,7 +2,10 @@ let express = require('express');
 let redis = require('redis');
 
 const app = express();
-const client = redis.createClient();
+const client = redis.createClient({
+  host: 'redis-server',
+  port: 6379
+});
 
 let port = 3000;
 client.get('visits', (err, visits) => {
