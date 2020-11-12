@@ -7,7 +7,7 @@ const client = redis.createClient({
   port: 6379
 });
 
-let port = 3000;
+let port = 3001;
 client.get('visits', (err, visits) => {
   if (!visits || parseInt(visits) < 0) client.set('visits', 0);
 })

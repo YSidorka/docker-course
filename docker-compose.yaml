@@ -3,8 +3,23 @@ services:
   redis-server:
     image: 'redis'
 
-  node-app:
-    build: .
+  api-server:
+    build:
+      context: ./node-app
+      dockerfile: Dockerfile
+    ports:
+      - '8080:3001'
+    restart: always
+
+  ui-frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
     ports:
       - '80:3000'
+    volumes:
+      - /usr/ui/node_modules
+      - ./frontend:/usr/ui
     restart: always
+    environment:
+      - CHOKIDAR_USEPOLLING=true

@@ -1,7 +1,7 @@
 # Use an existing docker image as a base
 FROM node:alpine
 
-WORKDIR '/app'
+WORKDIR '/usr/ui'
 
 # Download and install a dependency
 COPY ./package.json ./
