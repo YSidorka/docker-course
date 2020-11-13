@@ -11,15 +11,23 @@ services:
       - '8080:3001'
     restart: always
 
-  ui-frontend:
+#  ui-frontend:
+#    build:
+#      context: ./frontend
+#      dockerfile: Dockerfile.dev
+#    ports:
+#      - '3000:3000'
+#    volumes:
+#      - /usr/ui/node_modules
+#      - ./frontend:/usr/ui
+#    restart: always
+#    environment:
+#      - CHOKIDAR_USEPOLLING=true
+
+  ui-server:
     build:
       context: ./frontend
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     ports:
-      - '80:3000'
-    volumes:
-      - /usr/ui/node_modules
-      - ./frontend:/usr/ui
+      - '80:80'
     restart: always
-    environment:
-      - CHOKIDAR_USEPOLLING=true
