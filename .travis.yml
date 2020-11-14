@@ -15,7 +15,7 @@ branches:
 
 before_install:
   - cd ./frontend
-  - docker build -t ysidorko/docker-course -f Dockerfile.dev .
+  - docker build -t ysidorko/ui-server -f Dockerfile.dev .
 
 script:
   - docker run -e CI=true ysidorko/ui-server npm run test

@@ -5,4 +5,4 @@ docker system prune --force
 
 
 
-docker-compose up --build
+# docker-compose up --build
