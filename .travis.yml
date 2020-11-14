@@ -6,17 +6,16 @@ services:
 
 env:
   - ENV=dev PLATFORM=cf
-  - ENV=test PLATFORM=cf
 
 dist: xenial
 
 branches:
   only:
     - /^dev-v[0-9|\.]+/
-    - /^test-v[0-9|\.]+/
 
 before_install:
-  - docker build -t ysidorko/docker-course -f Dockerfile.dev ./frontend
+  - cd ./frontend
+  - docker build -t ysidorko/docker-course -f Dockerfile.dev .
 
 script:
   - docker run -e CI=true ysidorko/ui-server npm run test
