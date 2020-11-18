@@ -1,9 +1,11 @@
-sudo: required
+sudo: true
 language: generic
+
+os: linux
+dist: xenial
 
 services:
   - docker
-
 
 branches:
   only:
@@ -21,7 +23,7 @@ deploy:
   region: "eu-central-1"
   app: "docker-react"
   env: "DockerReact-env"
-  bucket_name: "elasticbeanstalk-eu-central-1-099545163540"
+  bucket: "elasticbeanstalk-eu-central-1-099545163540"
   bucket_path: "docker-react"
   access_key_id: $AWS_ACCESS_KEY
   secret_access_key: $AWS_SECRET_KEY
