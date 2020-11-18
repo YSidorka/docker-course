@@ -4,8 +4,6 @@ language: generic
 services:
   - docker
 
-dist: xenial
-
 branches:
   only:
     - /^dev-v[0-9|\.]+/
