@@ -9,14 +9,13 @@ services:
 
 branches:
   only:
-    - develop
-#  - /^dev-v[0-9|\.]+/
+    - /^dev-v[0-9|\.]+/
 
 before_install:
   - cd ./frontend
   - docker build -t ysidorko/ui-server -f Dockerfile .
 
-script:
+#script:
 #  - docker run -e CI=true ysidorko/ui-server npm run test
 
 deploy:
@@ -27,6 +26,6 @@ deploy:
   bucket: "elasticbeanstalk-eu-north-1-099545163540"
   bucket_path: "docker-react"
   on:
-    branch: develop
+    tags: /^dev-v[0-9|\.]+/
   access_key_id: $AWS_ACCESS_KEY
   secret_access_key: $AWS_SECRET_KEY
