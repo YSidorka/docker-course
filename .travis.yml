@@ -9,7 +9,8 @@ services:
 
 branches:
   only:
-    - /^dev-v[0-9|\.]+/
+    - develop
+#  - /^dev-v[0-9|\.]+/
 
 before_install:
   - cd ./frontend
