@@ -9,7 +9,8 @@ services:
 
 branches:
   only:
-    - /^dev-v[0-9|\.]+/
+    - develop
+    - master
 
 before_install:
   - cd ./frontend
@@ -26,6 +27,6 @@ deploy:
   bucket: "elasticbeanstalk-eu-north-1-099545163540"
   bucket_path: "docker-react"
   on:
-    tags: /^dev-v[0-9|\.]+/
+    all_branches: true
   access_key_id: $AWS_ACCESS_KEY
   secret_access_key: $AWS_SECRET_KEY
