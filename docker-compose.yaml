@@ -5,7 +5,7 @@ services:
 
   api-server:
     build:
-      context: ./node-app
+      context: server
       dockerfile: Dockerfile
     ports:
       - '8080:3001'
