@@ -88,6 +88,6 @@ app.get('/', async (req, res) => {
   }
 });
 
-let server = app.listen(keys.serverPort, () => {
+let server = app.listen(keys.serverPort || 5000, () => {
   console.log(`Server started on port ${keys.serverPort}!`);
 });

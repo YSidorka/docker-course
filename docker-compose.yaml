@@ -1,12 +1,24 @@
 version: '3'
 services:
   redis-server:
-    image: 'redis'
-
-  api-server:
+    image: 'redis:latest'
+  postgres-server:
+    image: 'postgres:latest'
+  api:
     build:
-      context: server
-      dockerfile: Dockerfile
+      context: ./server
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /usr/api/node_modules
+      - ./server:/usr/api
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - PGUSER=postgres
+      - PGHOST=postgres
+      - PGDATABASE=postgres
+      - POSTGRES_PASSWORD=postgres_password
+      - PGPORT=5432
     ports:
       - '8080:3001'
     restart: always
@@ -23,11 +35,11 @@ services:
 #    restart: always
 #    environment:
 #      - CHOKIDAR_USEPOLLING=true
-
-  ui-server:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    ports:
-      - '80:80'
-    restart: always
+#
+#  ui-server:
+#    build:
+#      context: ./frontend
+#      dockerfile: Dockerfile
+#    ports:
+#      - '80:80'
+#    restart: always
