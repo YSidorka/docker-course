@@ -47,7 +47,7 @@ const redisPublisher = redisClient.duplicate();
 app.get('/values/all', async (req, res) => {
   try {
     const values = await pgClient.query('SELECT * from values');
-    return res.send(values.row);
+    return res.send(values.rows);
   } catch (err) {
     return res.status(500).send({ message: 'GET /values/all', err: JSON.stringify(err) });
   }
@@ -88,6 +88,6 @@ app.get('/', async (req, res) => {
   }
 });
 
-let server = app.listen(keys.serverPort || 5000, () => {
+let server = app.listen(keys.serverPort, () => {
   console.log(`Server started on port ${keys.serverPort}!`);
 });
