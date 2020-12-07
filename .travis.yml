@@ -13,6 +13,7 @@ branches:
     - master
 
 before_install:
+  - ls
   - cd ./frontend
   - docker build -t ysidorko/ui-test -f ./frontend/Dockerfile.dev ./frontend
 
