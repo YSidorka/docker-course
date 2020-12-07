@@ -14,10 +14,25 @@ branches:
 
 before_install:
   - cd ./frontend
-  - docker build -t ysidorko/ui-server -f Dockerfile.dev .
+  - docker build -t ysidorko/ui-test -f ./frontend/Dockerfile.dev ./frontend
 
 script:
-  - docker run -e CI=true ysidorko/ui-server npm run test
+  - docker run -e CI=true ysidorko/ui-test npm run test
+
+after_success:
+  - docker build -t ysidorko/ui -f ./frontend/Dockerfile ./frontend
+  - docker build -t ysidorko/nginx -f ./frontend/Dockerfile ./nginx
+  - docker build -t ysidorko/api -f ./frontend/Dockerfile ./server
+  - docker build -t ysidorko/worker -f ./frontend/Dockerfile ./worker
+
+# Log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+# take those images and push them to the docker hub
+  - docker push ysidorko/ui
+  - docker push ysidorko/nginx
+  - docker push ysidorko/api
+  - docker push ysidorko/worker
+
 
 deploy:
   provider: elasticbeanstalk
