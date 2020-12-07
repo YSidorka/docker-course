@@ -22,9 +22,9 @@ script:
 
 after_success:
   - docker build -t ysidorko/ui -f ./frontend/Dockerfile ./frontend
-  - docker build -t ysidorko/nginx -f ./frontend/Dockerfile ./nginx
-  - docker build -t ysidorko/api -f ./frontend/Dockerfile ./server
-  - docker build -t ysidorko/worker -f ./frontend/Dockerfile ./worker
+  - docker build -t ysidorko/nginx -f ./nginx/Dockerfile ./nginx
+  - docker build -t ysidorko/api -f ./server/Dockerfile ./server
+  - docker build -t ysidorko/worker -f ./worker/Dockerfile ./worker
 
 # Log in to the docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
