@@ -2,7 +2,7 @@ sudo: required
 language: generic
 
 os: linux
-dist: xenial
+dist: trusty
 
 services:
   - docker
