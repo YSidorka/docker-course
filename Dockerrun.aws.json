@@ -1,0 +1,36 @@
+{
+  "AWSEBDockerrunVersion": 2,
+  "containerDefinitions": [
+    {
+      "name": "ui",
+      "image": "ysidorko/ui",
+      "hostname": "ui",
+      "essential": false
+    },
+    {
+      "name": "nginx",
+      "image": "ysidorko/nginx",
+      "hostname": "nginx",
+      "essential": true,
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 80
+        }
+      ],
+      "links": ["ui", "server"]
+    },
+    {
+      "name": "server",
+      "image": "ysidorko/api",
+      "hostname": "api",
+      "essential": false
+    },
+    {
+      "name": "worker",
+      "image": "ysidorko/worker",
+      "hostname": "worker",
+      "essential": false
+    }
+  ]
+}

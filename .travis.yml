@@ -2,7 +2,7 @@ sudo: required
 language: generic
 
 os: linux
-dist: xenial
+dist: trusty
 
 services:
   - docker
@@ -13,19 +13,35 @@ branches:
     - master
 
 before_install:
-  - cd ./frontend
-  - docker build -t ysidorko/ui-server -f Dockerfile.dev .
+#  - ls
+#  - cd ./frontend
+  - docker build -t ysidorko/ui-test -f ./frontend/Dockerfile.dev ./frontend
 
 script:
-  - docker run -e CI=true ysidorko/ui-server npm run test
+  - docker run -e CI=true ysidorko/ui-test npm run test
+
+after_success:
+  - docker build -t ysidorko/ui -f ./frontend/Dockerfile ./frontend
+  - docker build -t ysidorko/nginx -f ./nginx/Dockerfile ./nginx
+  - docker build -t ysidorko/api -f ./server/Dockerfile ./server
+  - docker build -t ysidorko/worker -f ./worker/Dockerfile ./worker
+
+# Log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+# take those images and push them to the docker hub
+  - docker push ysidorko/ui
+  - docker push ysidorko/nginx
+  - docker push ysidorko/api
+  - docker push ysidorko/worker
+
 
 deploy:
   provider: elasticbeanstalk
-  region: "eu-north-1"
-  app: "docker-react"
-  env: "DockerReact-env"
-  bucket: "elasticbeanstalk-eu-north-1-099545163540"
-  bucket_path: "docker-react"
+  region: "eu-central-1"
+  app: "multi-docker"
+  env: "MultiDocker-env"
+  bucket_name: "elasticbeanstalk-eu-central-1-099545163540"
+  bucket_path: "docker-multi"
   on:
     all_branches: true
   access_key_id: $AWS_ACCESS_KEY
