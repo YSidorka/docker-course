@@ -35,14 +35,14 @@ after_success:
   - docker push ysidorko/worker
 
 
-deploy:
-  provider: elasticbeanstalk
-  region: "eu-central-1"
-  app: "multi-docker"
-  env: "MultiDocker-env"
-  bucket_name: "elasticbeanstalk-eu-central-1-099545163540"
-  bucket_path: "docker-multi"
-  on:
-    all_branches: true
-  access_key_id: $AWS_ACCESS_KEY
-  secret_access_key: $AWS_SECRET_KEY
+# deploy:
+#  provider: elasticbeanstalk
+#  region: "eu-central-1"
+#  app: "multi-docker"
+#  env: "MultiDocker-env"
+#  bucket_name: "elasticbeanstalk-eu-central-1-099545163540"
+#  bucket_path: "docker-multi"
+#  on:
+#    all_branches: true
+#  access_key_id: $AWS_ACCESS_KEY
+#  secret_access_key: $AWS_SECRET_KEY
