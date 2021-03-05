@@ -8,7 +8,7 @@ services:
       - POSTGRES_PASSWORD=P1234567890
   nginx:
     build:
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
       context: ./nginx
     restart: always
     ports:
@@ -19,7 +19,7 @@ services:
   api:
     build:
       context: ./server
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
     volumes:
       - /usr/api/node_modules
       - ./server:/usr/api
@@ -36,7 +36,7 @@ services:
   ui:
     build:
       context: ./frontend
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
     volumes:
       - /usr/ui/node_modules
       - ./frontend:/usr/ui
@@ -46,7 +46,7 @@ services:
   worker:
     build:
       context: ./worker
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
     volumes:
       - /usr/worker/node_modules
       - ./worker:/usr/worker

@@ -1,14 +1,15 @@
 # Use an existing docker image as a base
-FROM node:alpine
+FROM node:14.14.0-alpine
 
-WORKDIR /usr/app
+WORKDIR /usr/ui
 
 # Download and install a dependency
 COPY ./package.json ./
 RUN npm install
-
 COPY ./ ./
 RUN npm run build
 
 FROM nginx:alpine
-COPY --from=0 ./usr/app/build ./usr/share/nginx/html
+EXPOSE 3000
+COPY --from=0 ./usr/ui/build ./usr/share/nginx/html
+COPY ./nginx/default.conf ./etc/nginx/conf.d/default.conf
