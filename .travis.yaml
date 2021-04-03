@@ -16,7 +16,6 @@ branches:
   only:
     - develop
     - master
-    - feature/k8s_deployment
 
 before_install:
   - openssl aes-256-cbc -K $encrypted_9f3b5599b056_key -iv $encrypted_9f3b5599b056_iv -in service-account.json.enc -out service-account.json -d
@@ -40,6 +39,6 @@ deploy:
   script: bash ./deploy.sh
   skip_cleanup: true
   on:
-    branch: feature/k8s_deployment
+    branch: master
 
 #after_deploy:
