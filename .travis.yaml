@@ -7,6 +7,11 @@ dist: trusty
 services:
   - docker
 
+env:
+  global:
+    - SHA=$(git rev-parse HEAD)
+    - CLOUDSDK_CORE_DISABLE_PROMPTS=1
+
 branches:
   only:
     - develop
@@ -18,5 +23,22 @@ before_install:
   - source $HOME/google-cloud-sdk/path.bash.inc
   - gcloud components update kubectl
   - gcloud auth activate-service-account --key-file service-account.json
+  - gcloud config set project docker-k8s-course
+  - gcloud config set compute/zone us-central1-a
+  - gcloud container clusters get-credentials multi-cluster
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker build -t ysidorko/ui-test -f ./frontend/Dockerfile.dev ./frontend
 
+script:
+  - docker run -e CI=true ysidorko/ui-test npm run test
 
+#before_deploy:
+
+deploy:
+  provider: script
+  script: bash ./deploy.sh
+  skip_cleanup: true
+  on:
+    branch: master
+
+#after_deploy:
