@@ -15,6 +15,7 @@ env:
 branches:
   only:
     - develop
+    - master
     - feature/k8s_deployment
 
 before_install:
