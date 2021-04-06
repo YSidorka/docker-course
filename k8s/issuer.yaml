@@ -10,6 +10,6 @@ spec:
       name: letsencrypt-prod
     solvers:
       - selector: {}
-      - http01:
+        http01:
           ingress:
             class: nginx
