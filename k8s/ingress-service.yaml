@@ -8,15 +8,14 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /$1
     cert-manager.io/cluster-issuer: 'letsencrypt-prod'
     nginx.ingress.kubernetes.io/ssl-redirect: 'false'
+    nginx.ingress.kubernetes.io/from-to-www-redirect: 'true'
 spec:
   tls:
     - hosts:
       - kademi.dev
-      - www.kademi.dev
       secretName: kademi-dev
     - hosts:
       - kademi.site
-      - www.kademi.site
       secretName: kademi-site
   rules:
     - host: kademi.site
@@ -36,41 +35,7 @@ spec:
                 name: server-cluster-ip
                 port:
                   number: 5000
-    - host: www.kademi.site
-      http:
-        paths:
-          - path: /?(.*)
-            pathType: Prefix
-            backend:
-              service:
-                name: frontend-cluster-ip
-                port:
-                  number: 3000
-          - path: /api/?(.*)
-            pathType: Prefix
-            backend:
-              service:
-                name: server-cluster-ip
-                port:
-                  number: 5000
     - host: kademi.dev
-      http:
-        paths:
-          - path: /?(.*)
-            pathType: Prefix
-            backend:
-              service:
-                name: frontend-cluster-ip
-                port:
-                  number: 3000
-          - path: /api/?(.*)
-            pathType: Prefix
-            backend:
-              service:
-                name: server-cluster-ip
-                port:
-                  number: 5000
-    - host: www.kademi.dev
       http:
         paths:
           - path: /?(.*)
