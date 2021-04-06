@@ -1,0 +1,13 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: kademi-dev-tls
+spec:
+  secretName: kademi-dev
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  commonName: kademi.dev
+  dnsNames:
+    - kademi.dev
+    - www.kademi.dev
