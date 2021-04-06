@@ -12,6 +12,7 @@ docker push ysidorko/worker:latest
 docker push ysidorko/worker:$SHA
 
 
+kubectl delete -f ./k8s
 kubectl apply -f ./k8s
 kubectl set image deployments/server-deployment server=ysidorko/api:$SHA
 kubectl set image deployments/client-deployment client=ysidorko/ui:$SHA
